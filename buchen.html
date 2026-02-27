@@ -1,0 +1,177 @@
+﻿<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Termin buchen – Mimi's Brown</title>
+  <meta name="description" content="Termin online anfragen – Mimi's Brown Beauty & More" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+<header class="site-header premium">
+  <div class="header-inner">
+    <a class="brand" href="./index.html" aria-label="Zur Startseite">
+      <div class="brand-mark">
+        <img class="logo-img" src="./assets/logo/logo.png" alt="Mimi's Brown Beauty & More" loading="eager" />
+      </div>
+    </a>
+
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="./index.html#leistungen">Leistungen</a>
+      <a href="./index.html#about">Über mich</a>
+      <a href="./index.html#kontakt">Kontakt</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn primary" href="./buchen.html">Jetzt buchen</a>
+    </div>
+
+    <button class="hamburger" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-nav" hidden>
+    <a href="./index.html#leistungen">Leistungen</a>
+    <a href="./index.html#about">Über mich</a>
+    <a href="./index.html#kontakt">Kontakt</a>
+    <a class="btn primary" href="./buchen.html">Jetzt buchen</a>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <h2>Termin anfragen</h2>
+        <p>Wählen Sie eine Behandlung und Ihren Wunschtermin. Wir bestätigen schnell per Telefon oder E-Mail.</p>
+      </div>
+
+      <div class="booking-grid">
+        <div class="card">
+          <h3>Kontakt</h3>
+          <p style="margin:0;color:var(--muted);line-height:1.7">
+            Eisenbahnstr 43, 79098 Freiburg im Breisgau<br/>
+            Telefon: <a href="tel:+4915120593187">+49 1512 0593187</a><br/>
+            E-Mail: <a href="mailto:leojolamoza@gmail.com">leojolamoza@gmail.com</a>
+          </p>
+          <div style="margin-top:14px" class="map-link">
+            <a class="btn ghost" href="https://maps.app.goo.gl/EwRJuETE79v4j7Lj6" target="_blank" rel="noopener noreferrer">
+              In Google Maps öffnen
+            </a>
+          </div>
+        </div>
+
+        <form class="form" id="bookingForm">
+          <div class="form-row">
+            <label>
+              Name
+              <input type="text" id="name" placeholder="Ihr Name" required />
+            </label>
+            <label>
+              Telefon
+              <input type="tel" id="phone" placeholder="+49 ..." />
+            </label>
+          </div>
+
+          <div class="form-row">
+            <label>
+              E-Mail
+              <input type="email" id="email" placeholder="name@mail.com" required />
+            </label>
+            <label>
+              Behandlung
+              <select id="service" required>
+                <option value="">Bitte wählen…</option>
+                <option>Microblading</option>
+                <option>Wimpernverlängerung</option>
+                <option>Powder Brows</option>
+                <option>Browlifting</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="form-row">
+            <label>
+              Wunschdatum
+              <input type="date" id="date" required />
+            </label>
+            <label>
+              Uhrzeit (Wunsch)
+              <input type="time" id="time" required />
+            </label>
+          </div>
+
+          <label>
+            Nachricht
+            <textarea id="message" rows="6" placeholder="z.B. Allergien, Wünsche, bevorzugte Zeiten…" required></textarea>
+          </label>
+
+          <button class="btn primary" type="submit">Anfrage senden</button>
+          <p class="form-note">Beim Klick wird Ihre E-Mail-App geöffnet. Ihre Anfrage geht an leojolamoza@gmail.com.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <div class="brand-title">MIMI'S BROWN</div>
+      <div class="brand-sub">Beauty &amp; More</div>
+    </div>
+    <div class="footer-links">
+      <a href="./impressum.html">Impressum</a>
+      <a href="./datenschutz.html">Datenschutz</a>
+      <a href="./pflichtangaben.html">Pflichtangaben</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile menu
+  const btn = document.querySelector(".hamburger");
+  const mobile = document.querySelector(".mobile-nav");
+  btn?.addEventListener("click", () => {
+    const isOpen = !mobile.hasAttribute("hidden");
+    if (isOpen) { mobile.setAttribute("hidden",""); btn.setAttribute("aria-expanded","false"); }
+    else { mobile.removeAttribute("hidden"); btn.setAttribute("aria-expanded","true"); }
+  });
+  mobile?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+    mobile.setAttribute("hidden","");
+    btn.setAttribute("aria-expanded","false");
+  }));
+
+  // booking -> mailto
+  const form = document.getElementById("bookingForm");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const service = document.getElementById("service").value.trim();
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
+    const msg = document.getElementById("message").value.trim();
+
+    const subject = encodeURIComponent("Termin-Anfrage: " + service);
+    const body = encodeURIComponent(
+      "Termin-Anfrage\\n\\n" +
+      "Name: " + name + "\\n" +
+      "Telefon: " + (phone || "-") + "\\n" +
+      "E-Mail: " + email + "\\n" +
+      "Behandlung: " + service + "\\n" +
+      "Wunschdatum: " + date + "\\n" +
+      "Uhrzeit: " + time + "\\n\\n" +
+      "Nachricht:\\n" + msg + "\\n"
+    );
+
+    window.location.href = "mailto:leojolamoza@gmail.com?subject=" + subject + "&body=" + body;
+  });
+</script>
+
+</body>
+</html>
